@@ -29,23 +29,14 @@ export const requestService = {
     return response.data;
   },
 
-  async updateStatus(identifier, status, credentials = null) {
-    const response = await api.patch(
-      `/requests/${encodeURIComponent(identifier)}/status`,
-      { status },
-      credentials
-        ? {
-            auth: {
-              username: credentials.username,
-              password: credentials.password,
-            },
-          }
-        : {}
-    );
+async updateStatus(identifier, status) {
+  const response = await api.patch(
+    `/requests/${encodeURIComponent(identifier)}/status`,
+    { status }
+  );
 
-    return response.data;
-  },
-
+  return response.data;
+},
   async getRequests(params = {}) {
     const response = await api.get('/requests', { params });
     return response.data;
@@ -56,30 +47,14 @@ export const requestService = {
     return response.data;
   },
 
-  // ADMIN LOGIN
-  async adminLogin(credentials) {
-    const response = await api.post('/admin/session', null, {
-      auth: {
-        username: credentials.username,
-        password: credentials.password,
-      },
-    });
+async adminLogin() {
+  return { authenticated: true };
+},
 
-    return response.data;
-  },
-
-  // ADMIN DASHBOARD
-  async getAdminDashboard(params = {}, credentials) {
-    const response = await api.get('/admin/dashboard', {
-      params,
-      auth: {
-        username: credentials.username,
-        password: credentials.password,
-      },
-    });
-
-    return response.data;
-  },
+async getAdminDashboard(params = {}) {
+  const response = await api.get('/requests', { params });
+  return response.data;
+},
 
   saveLocalRequest(req) {
     try {

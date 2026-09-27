@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Truck, Search, History, LayoutDashboard, PlusCircle, Wifi, WifiOff } from 'lucide-react';
+import { requestService } from '../services/api';
 import axios from 'axios';
+
+const API_BASE_URL = 'http://127.0.0.1:8001/api';
 
 export default function Navbar() {
   const location = useLocation();
@@ -9,7 +12,9 @@ export default function Navbar() {
 
   const checkBackendHealth = async () => {
     try {
-      const res = await axios.get('/api/health', { timeout: 4000 });
+const res = await axios.get('http://127.0.0.1:8001/api/health', {
+  timeout: 4000
+});
       if (res.status === 200) {
         setBackendStatus('connected');
       } else {
